@@ -7,7 +7,14 @@ from datetime import datetime
 
 TOKEN = '7881994789:AAFGxxZ2S80WHqEmYyxiF0xrKrphuWyvNfQ'
 scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
-creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
+import os
+import json
+from oauth2client.service_account import ServiceAccountCredentials
+
+scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
+creds_json = os.environ.get("GOOGLE_CREDS")
+creds_dict = json.loads(creds_json)
+creds = ServiceAccountCredentials.from_json_keyfile_dict(creds_dict, scope)
 client = gspread.authorize(creds)
 
 SPREADSHEET_NAME = 'Telegram Đơn Hàng'
